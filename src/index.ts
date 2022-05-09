@@ -9,8 +9,8 @@ const DEFAULT_REST_PORT: number = 5644;
 envLoad();
 
 // Get the HOSTNAME and PORT to create the URI.
-const HOSTNAME = process.env.DEFAULT_REST_HOSTNAME ?? DEFAULT_REST_HOSTNAME;
-let PORT = parseInt(process.env.DEFAULT_REST_PORT ?? '');
+const HOSTNAME = process.env.MDSRV_HOSTNAME ?? DEFAULT_REST_HOSTNAME;
+let PORT = parseInt(process.env.MDSRV_PORT ?? '');
 if (isNaN(PORT)) {
   PORT = DEFAULT_REST_PORT;
   console.error(
