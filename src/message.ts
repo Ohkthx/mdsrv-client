@@ -1,15 +1,4 @@
-export enum Destination {
-  NONE = 'none',
-  DISCORD = 'discord',
-}
-
-export enum Status {
-  INFO = 'info',
-  LOG = 'log',
-  DEBUG = 'debug',
-  WARN = 'warn',
-  ERROR = 'error',
-}
+import {Destination, Status} from '.';
 
 export interface Message {
   source: string;
@@ -32,7 +21,7 @@ export interface Message {
  * @param {string} value - Message data/text
  * @param {string} created - Optional: Date timestamp in ISO format
  */
-export function newMessage(
+export function createMessage(
   source: string,
   sourceId: string,
   dest: Destination,

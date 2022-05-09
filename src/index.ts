@@ -1,40 +1,18 @@
-import axios, {AxiosError} from 'axios';
-import {config as envLoad} from 'dotenv';
-import {Message} from './message';
+export const DEFAULT_MDSRV_HOSTNAME: string = 'localhost';
+export const DEFAULT_MDSRV_PORT: number = 5644;
 
-const DEFAULT_REST_HOSTNAME: string = 'localhost';
-const DEFAULT_REST_PORT: number = 5644;
-
-// Load the environment variables into process.env
-envLoad();
-
-// Get the HOSTNAME and PORT to create the URI.
-const HOSTNAME = process.env.MDSRV_HOSTNAME ?? DEFAULT_REST_HOSTNAME;
-let PORT = parseInt(process.env.MDSRV_PORT ?? '');
-if (isNaN(PORT)) {
-  PORT = DEFAULT_REST_PORT;
-  console.error(
-    `'DEFAULT_REST_PORT' is not set in '.env' file, using port '${PORT}'`,
-  );
+export enum Destination {
+  NONE = 'none',
+  DISCORD = 'discord',
 }
 
-// Set the target URI.
-const ENV_REST_URI: string = `http://${HOSTNAME}:${PORT}/`;
-
-/**
- * Send a message to the distributor.
- *
- * @param {Message} message - Message to be distributed.
- */
-export async function sendMessage(message: Message) {
-  try {
-    const response = await axios.post<Message>(ENV_REST_URI, message);
-    return response.data;
-  } catch (error) {
-    if ((error as AxiosError)?.response?.status === 404) {
-      throw new Error(`invalid uri '${ENV_REST_URI}', received 404.`);
-    }
-
-    throw new Error(`could not access '${ENV_REST_URI}'`);
-  }
+export enum Status {
+  INFO = 'info',
+  LOG = 'log',
+  DEBUG = 'debug',
+  WARN = 'warn',
+  ERROR = 'error',
 }
+
+export * from './message';
+export * from './client';
